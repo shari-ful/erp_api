@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ...config.dbpostgres import get_db, engine
+from ...internal.auth import oauth2_scheme
 from ...schemas import batch as batch_schema
 from ...models import batch as batch_model
 from ..crud.batch import *
@@ -14,7 +15,7 @@ async def get_batchs(skip: int=0, limit: int=50, db: Session = Depends(get_db)):
     return get_batch(db=db, skip=skip, limit=limit)
 
 @router.get("/batch/{batch_id}", tags=['batch'])
-async def get_batchs_by_id(batch_id: int, db: Session = Depends(get_db)):
+async def get_batchs_by_id(batch_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     db_batch = get_batch_by_id(db, batch_id=batch_id)
     if db_batch is None:
         raise HTTPException(status_code=404, detail="Batch not found")
