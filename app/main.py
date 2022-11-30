@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers.client import customer, supplier, customerAddress, location, resource
+from .routers.client import users, customer, supplier, customerAddress, location, resource
 from .routers.client import material, product, inventory, variant, batch, taxRate, webhook
 from .routers.client import salesOrder, salesOrderRow, salesOrderAddress, purchaseOrder, mfgOrder, stocktake
 
@@ -24,6 +24,7 @@ app.add_middleware(
 # API for version v1
 v1 = FastAPI()
 
+v1.include_router(users.router)
 v1.include_router(customer.router)
 v1.include_router(customerAddress.router)
 v1.include_router(location.router)

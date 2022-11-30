@@ -2,7 +2,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from dotenv import load_dotenv
-import databases 
 import os
 
 db_user = os.environ.get("DB_USER")
